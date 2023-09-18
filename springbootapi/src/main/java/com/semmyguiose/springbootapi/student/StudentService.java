@@ -1,11 +1,9 @@
 package com.semmyguiose.springbootapi.student;
 
-
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,28 +27,45 @@ public class StudentService {
 
     @Transactional
     public Student createStudent(Student student) {
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+        if (studentOptional.isPresent()) {
+            throw new IllegalStateException("email taken");
+        }
         return studentRepository.save(student);
     }
 
     @Transactional
     public void deleteStudent(Long id) {
+        Boolean existStudent = studentRepository.existsById(id);
+        if (!existStudent) {
+            throw new IllegalStateException("student" + id + " not exist");
+        }
         studentRepository.deleteById(id);
     }
 
     @Transactional
-    public Student updateStudent(Student student) {
-        Student studentUpdate = studentRepository.findById(student.getId()).orElse(null);
-        if (studentUpdate != null) {
+    public Student updateStudent(Long id, Student student) {
+        Boolean studentExist = studentRepository.existsById(id);
+
+        if (studentExist) {
+            Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+            if (studentOptional.isPresent()) {
+                throw new IllegalStateException("email taken");
+            }
+            Student studentUpdate = studentRepository.findById(id).get();
             // Appliquez les modifications sur l'étudiant existant
-            studentUpdate.setName(studentUpdate.getName());
-            studentUpdate.setDob(studentUpdate.getDob());
-            studentUpdate.setEmail(studentUpdate.getEmail());
+            studentUpdate.setName(student.getName());
+            studentUpdate.setDob(student.getDob());
+            studentUpdate.setEmail(student.getEmail());
             // Appliquez d'autres modifications si nécessaire
 
             // Sauvegardez l'étudiant mis à jour dans la base de données
-            return studentRepository.save(studentUpdate);
+            // studentRepository.save(studentUpdate);
+            return studentUpdate;
+        } else {
+            throw new IllegalStateException("student" + id + " not exist");
         }
-        return studentUpdate;
+
     }
 
 }

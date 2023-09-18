@@ -3,6 +3,7 @@ package com.semmyguiose.springbootapi.student;
 import java.time.LocalDate;
 import java.time.Period;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Student {
     private String name;
     // private Integer age;
     private LocalDate dob;
+    @Column(unique = true)
     private String email;
 
     @Transient
