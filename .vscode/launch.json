@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SpringbootapiApplication<springbootapi>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.semmyguiose.springbootapi.SpringbootapiApplication",
+      "projectName": "springbootapi",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

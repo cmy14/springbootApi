@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  test:
+    image: postgres:12.2
+    deploy:
+      restart_policy:
+        condition: none
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: tes
+      POSTGRES_DB: test
+    ports:
+      - 5432:5432
+  dev:
+    image: postgres:12.2
+    deploy:
+      restart_policy:
+        condition: none
+    environment:
+      POSTGRES_PASSWORD: dev
+      POSTGRES_USER: dev
+      POSTGRES_DB: dev
+    ports:
+      - 5432:5432
+  prod:
+    image: postgres:12.2
+    deploy:
+      restart_policy:
+        condition: none
+    environment:
+      POSTGRES_PASSWORD: prod
+      POSTGRES_USER: prod
+      POSTGRES_DB: prod
+    ports:
+      - 5432:5432
